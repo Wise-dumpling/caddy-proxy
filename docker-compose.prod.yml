@@ -1,0 +1,32 @@
+name: caddy-proxy
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - caddy_proxy
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+networks:
+  caddy_proxy:
+    name: caddy_proxy
+
+volumes:
+  caddy_data:
+  caddy_config:

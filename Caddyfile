@@ -1,0 +1,16 @@
+aerolog.kpvlab.org {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy aerolog-backend:8000
+	}
+
+	handle {
+		reverse_proxy aerolog-frontend:80
+	}
+}
+
+iching.kpvlab.org {
+	encode zstd gzip
+	reverse_proxy iching-webapp:8080
+}
