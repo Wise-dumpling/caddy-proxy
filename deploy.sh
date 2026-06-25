@@ -12,5 +12,6 @@ if [ ! -f .env ]; then
   cp .env.example .env
 fi
 
+docker network inspect caddy_proxy >/dev/null 2>&1 || docker network create caddy_proxy
 docker compose --env-file .env -f docker-compose.prod.yml up -d
 docker image prune -af --filter "until=24h"
