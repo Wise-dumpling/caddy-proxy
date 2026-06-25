@@ -4,6 +4,9 @@ set -eu
 cd /opt/caddy-proxy
 
 if [ -d .git ]; then
+  : "${GIT_SSH_COMMAND:=ssh -i /root/.ssh/aerolog_deploy -o IdentitiesOnly=yes}"
+  export GIT_SSH_COMMAND
+
   git fetch --prune origin
   git reset --hard origin/main
 fi
