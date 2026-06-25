@@ -26,6 +26,7 @@ services:
 networks:
   caddy_proxy:
     name: caddy_proxy
+    external: true
 
 volumes:
   caddy_data:

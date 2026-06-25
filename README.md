@@ -8,7 +8,7 @@ Shared Caddy reverse proxy for public apps on `kpvlab.org`.
 - `https://aerolog.kpvlab.org/api/*` -> `aerolog-backend:8000`
 - `https://iching.kpvlab.org` -> `iching-webapp:8080`
 
-The proxy owns public ports `80` and `443` and creates the shared Docker network
+The proxy owns public ports `80` and `443` and joins the shared Docker network
 `caddy_proxy`. App compose stacks must join that network and should not publish
 public HTTP/HTTPS ports.
 
@@ -23,6 +23,7 @@ public HTTP/HTTPS ports.
 ```sh
 cd /opt/caddy-proxy
 cp .env.example .env
+docker network inspect caddy_proxy >/dev/null 2>&1 || docker network create caddy_proxy
 docker compose --env-file .env -f docker-compose.prod.yml up -d
 ```
 
